@@ -1,0 +1,46 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: alexcapiwise
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: alerts
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: cw-service
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: dev
+  region: eu-central-1
+  environment:
+    TOKEN_12: ${env:TOKEN_12}
+    TOKEN_E: ${env:TOKEN_E}
+    TOKEN_NEWS: ${env:TOKEN_NEWS}
+    REGION: ${env:REGION}
+    STAGE: ${env:STAGE}
+    TOKEN_ALG: ${env:TOKEN_ALG}
+    TOKEN_K: ${env:TOKEN_K}
+    ALERT_TABLE: ${env:ALERT_TABLE}
+    PROFILE_TABLE: ${env:PROFILE_TABLE}
+    NOTIFICATION_TABLE: ${env:NOTIFICATION_TABLE}
+
+functions:
+  # alerts:
+  #   handler: handler.index
+  # user:
+  #   handler: handler.index
+  # stocks:
+  #   handler: handler.index
+  # auth:
+  #   handler: handler.index
+  app:
+    handler: api.index
+  alert-notification:
+    handler: alert.alertHandler
+  news-notification:
+    handler: news.newsHandler
+  sqs-handler:
+    handler: sqs.handler
+    # presignup handler, merge 2 different identity providers
+  signup-handler:
+    handler: auth.presignupHandler
+  new-alert-handler:
+    handler: alert.newalertHandler
